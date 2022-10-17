@@ -5,9 +5,18 @@ require('dotenv').config()
 require("@nomiclabs/hardhat-etherscan");
 //用它来Create2
 require("xdeployer")
+//Gas Report
+require("hardhat-gas-reporter");
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.17",
+  solidity: {
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+      },
+    },
+  },
   networks: {
     hardhat: {
       forking: {
@@ -45,4 +54,9 @@ module.exports = {
       polygonMumbai: process.env.PolygonApi,
     }
   },
+  gasReporter: {
+    currency: 'CHF',
+    gasPrice: 21,
+    enabled: (process.env.REPORT_GAS) ? true : false
+  }
 };

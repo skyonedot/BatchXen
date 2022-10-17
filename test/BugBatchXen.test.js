@@ -9,7 +9,7 @@ async function increaseTime(value) {
   await ethers.provider.send('evm_mine');
 }
 
-describe("BugBathchXen1 Contract", function(){
+describe("BugBathchXen Contract", function(){
   before(async function () {
     this.signer = (await ethers.getSigners())[0]
     const BatchXen1 = await hre.ethers.getContractFactory("BugBatchXen1", this.signer);
@@ -55,6 +55,8 @@ describe("BugBathchXen1 Contract", function(){
     expect(await this.xen.balanceOf(user.address)).to.be.above(0);
   });
 
+
+  
   it("Use Batch Xen1 Correctlly", async function(){
     // console.log((await this.xen.balanceOf(((await ethers.getSigners())[2].address)))/1e18)
     expect(await this.xen.balanceOf(((await ethers.getSigners())[2].address))).to.above(0);
@@ -67,23 +69,22 @@ describe("BugBathchXen1 Contract", function(){
     // console.log((await this.xen.balanceOf(this.signer.address))/1e18)
     expect(await this.xen.balanceOf(this.signer.address)).to.be.above(0);
   });
+  // // it("Hack The Xen1", async function(){
+  // //   let innocenter = (await ethers.getSigners())[3]
+  // //   let hacker = (await ethers.getSigners())[4]
+  // //   expect(await this.xen.balanceOf(innocenter.address)).to.equal(0);
+  // //   expect(await this.xen.balanceOf(hacker.address)).to.equal(0);
+  // //   let amount = 10
+  // //   let tx = await this.batchXen1.connect(innocenter).batchClaimRank(amount, 1)
+  // //   await tx.wait()
+  // //   await increaseTime(24 * 60 * 60)
 
-  it("Hack The Xen1", async function(){
-    let innocenter = (await ethers.getSigners())[3]
-    let hacker = (await ethers.getSigners())[4]
-    expect(await this.xen.balanceOf(innocenter.address)).to.equal(0);
-    expect(await this.xen.balanceOf(hacker.address)).to.equal(0);
-    let amount = 10
-    let tx = await this.batchXen1.connect(innocenter).batchClaimRank(amount, 1)
-    await tx.wait()
-    await increaseTime(24 * 60 * 60)
-
-    // 这个合约地址是先跑一边拿到的
-    tx = await this.hackBatchXen1.connect(hacker).attack("0xe9cb02c1bec789e0219cdffeec502de833979f2c")
-    await tx.wait()
-    // console.log("Hacker Xen1 Balance",(await this.xen.balanceOf(hacker.address))/1e18)
-    expect(await this.xen.balanceOf(hacker.address)).to.be.above(0);
-  })
+  // //   // 这个合约地址是先跑一边拿到的
+  // //   tx = await this.hackBatchXen1.connect(hacker).attack("0xe9cb02c1bec789e0219cdffeec502de833979f2c")
+  // //   await tx.wait()
+  // //   // console.log("Hacker Xen1 Balance",(await this.xen.balanceOf(hacker.address))/1e18)
+  // //   expect(await this.xen.balanceOf(hacker.address)).to.be.above(0);
+  // // })
 
   it("Use Batch Xen2 Correctlly", async function(){
     let afterXen1Balance = await this.xen.balanceOf(this.signer.address)
@@ -99,26 +100,28 @@ describe("BugBathchXen1 Contract", function(){
     expect(await this.xen.balanceOf(this.signer.address)).to.be.above(afterXen1Balance);
   });
 
-  it("Hack The Xen2", async function(){
-    let innocenter = (await ethers.getSigners())[5]
-    let hacker = (await ethers.getSigners())[6]
-    expect(await this.xen.balanceOf(innocenter.address)).to.equal(0);
-    expect(await this.xen.balanceOf(hacker.address)).to.equal(0);
-    let amount = 10
-    let tx = await this.batchXen2.connect(innocenter).batchClaimRank(0, amount, 1)
-    await tx.wait()
-    await increaseTime(24 * 60 * 60)
+  // // it("Hack The Xen2", async function(){
+  // //   let innocenter = (await ethers.getSigners())[5]
+  // //   let hacker = (await ethers.getSigners())[6]
+  // //   expect(await this.xen.balanceOf(innocenter.address)).to.equal(0);
+  // //   expect(await this.xen.balanceOf(hacker.address)).to.equal(0);
+  // //   let amount = 10
+  // //   let tx = await this.batchXen2.connect(innocenter).batchClaimRank(0, amount, 1)
+  // //   await tx.wait()
+  // //   await increaseTime(24 * 60 * 60)
 
-    // tx = await this.batchXen2.connect(innocenter).batchClaimMintReward(0, amount)
-    // await tx.wait()
-    // // console.log((await this.xen.balanceOf(this.signer.address))/1e18)
-    // expect(await this.xen.balanceOf(innocenter.address)).to.be.above(0);
-    // 这个合约地址是先跑一边拿到的
-    tx = await this.hackBatchXen1.connect(hacker).attack("0xc17b2e80318a3d4900376b8faeafae8702eba7ab")
-    await tx.wait()
-    // console.log("Hacker Xen1 Balance",(await this.xen.balanceOf(hacker.address))/1e18)
-    expect(await this.xen.balanceOf(hacker.address)).to.be.above(0);
-  })
+  // //   // tx = await this.batchXen2.connect(innocenter).batchClaimMintReward(0, amount)
+  // //   // await tx.wait()
+  // //   // // console.log((await this.xen.balanceOf(this.signer.address))/1e18)
+  // //   // expect(await this.xen.balanceOf(innocenter.address)).to.be.above(0);
+  // //   // 这个合约地址是先跑一边拿到的
+  // //   tx = await this.hackBatchXen1.connect(hacker).attack("0xc17b2e80318a3d4900376b8faeafae8702eba7ab")
+  // //   await tx.wait()
+  // //   // console.log("Hacker Xen1 Balance",(await this.xen.balanceOf(hacker.address))/1e18)
+  // //   expect(await this.xen.balanceOf(hacker.address)).to.be.above(0);
+  // // })
 
 
 });
+
+
