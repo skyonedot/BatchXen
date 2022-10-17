@@ -136,5 +136,30 @@ BatchXen2 的ClaimRank 平均 是 5.3w 领取是19.3w
 >
 > miniproxy是把中间的20个, 换成factory的address, 一般来说 是 address(this)
 
+> 不同的Test文件中的describe 也是会有影响的, 可能用的都是本地的RPC
+
+---
+
+#### Immutable
+
+注意imutable 和 constant的用法
+callback其实是以delegateCall的用法, 那么 比较调用的original 应该是存在于 miniproxy中的, 但是miniproxy中又没有这个, 那么为什么能管用. 
+
+因为original是immutable的, 即每次出现时会自动填充值. 详情见参考资料
+
+```solidity
+function callback(address target, bytes memory data) external {
+  require(msg.sender == original, "Only original can call this function.");
+  (bool success, ) = target.call(data);
+  require(success, "Transaction failed.");
+}
+```
+
+
+---
+
+参考资料
+1. [爆改！都是科技与狠活](https://mirror.xyz/0x3dbb624861C0f62BdE573a33640ca016E4c65Ff7/q7C21iEF1eZkXrlZvgXN_1xSYiKZXBvrB2yFkSknsYU)
+
 
 

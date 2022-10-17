@@ -18,10 +18,11 @@ module.exports = {
     },
   },
   networks: {
+    // 这个不能去掉, npx hardhat test 要用
     hardhat: {
       forking: {
-        //url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
         url: process.env.MainnetRPC,
+        // url: process.env.AlchemyRPC
         // accounts: {
         //   mnemonic: "test test test test test test test test test test test junk",
         //   path: "m/44'/60'/0'/0",
